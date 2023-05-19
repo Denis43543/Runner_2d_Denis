@@ -1,0 +1,91 @@
+body {
+    font-family: 'Righteous', cursive;
+    margin: 0;
+    padding: 0;
+
+    
+}
+.main {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    background: linear-gradient(45deg, #A764E9 20%, #34B33B 100%);
+   text-align: center;
+    
+    
+
+}
+
+.container {
+    display: flex;
+    max-width: 1800px;
+    margin: auto;
+    color: whitesmoke;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+.video_with_gameplay {
+    max-width: 1600px;
+    width: 1000px;
+    height:600px;
+    
+   
+    
+}
+.btn {
+    width: 200px;
+    height: 50px;
+    background-color: #34B33B;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: whitesmoke;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 20px;
+}
+.btn:hover {
+    background-color: #44E6C9;
+}
+.btn:focus {
+    outline: none;
+}
+.btn:active {
+    transform: scale(5.0);
+}
+.btn__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+/* Оптимизация страницы под все гаджеты */
+@media (max-width: 768px) {
+    .main {
+        flex-direction: column;
+    }
+    .video_with_gameplay {
+        width: 100%;
+        height: 400px;
+    }
+    .btn {
+        width: 150px;
+        height: 40px;
+        font-size: 15px;
+    }
+}
+@media (max-width: 1010px) {
+    
+    .video_with_gameplay {
+        width: 100%;
+        height: 400px;
+    }
+    
+}
+
+
+
+
