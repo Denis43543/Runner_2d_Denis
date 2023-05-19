@@ -67,6 +67,24 @@ public class LeaderboardManager : MonoBehaviour
 
         return entries;
     }
+
+    public void ClearLeaderboard()
+    {
+        using (IDbConnection dbConnection = new SqliteConnection(connectionString))
+        {
+            dbConnection.Open();
+
+            using (IDbCommand dbCommand = dbConnection.CreateCommand())
+            {
+                string sql = "UPDATE Leaderboard SET player_name = '', score = 0";
+                dbCommand.CommandText = sql;
+                dbCommand.ExecuteNonQuery();
+            }
+
+            dbConnection.Close();
+        }
+    }
+
 }
 
 public struct LeaderboardEntry

@@ -34,8 +34,9 @@ public class PlayerController : MonoBehaviour
     private bool isRolling = false;
     private float rollTimer = 0f;
     private float initialSpeed;
-
+    public bool isDeath;
     private const string ScoreKey = "score";
+
 
     void Start()
     {
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        
+
         Vector2 pos = transform.position;
         float groundDistance = Mathf.Abs(pos.y - groundHeight);
 
@@ -95,6 +98,8 @@ public class PlayerController : MonoBehaviour
                 GetComponent<Rigidbody2D>().velocity = transform.right * initialSpeed;
             }
         }
+
+        
     }
 
     private void FixedUpdate()
@@ -126,7 +131,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
+        
         transform.position = pos;
     }
 
@@ -141,6 +146,7 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Death"))
         {
+            isDeath = true;
             OnDeath();
         }
         if(collision.gameObject.CompareTag("JB"))
@@ -149,20 +155,40 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(time());
         }
     }
-    void OnDeath()
+    public void OnDeath()
     {
-        PlayerPrefs.SetInt(ScoreKey,count.count);
-        manager.InsertScore(PlayerPrefs.GetString("player_name") , PlayerPrefs.GetInt("score"));
-
-        deathPanel.SetActive(true);
-        gameObject.GetComponent<Rigidbody2D>().simulated = false;
-        for (int i = 0; i < backGround.Length; i++)
+        if (isDeath)
         {
-            backGround[i].GetComponent<BackgroundHelper>().enabled = false;
+            PlayerPrefs.SetInt(ScoreKey,count.count);
+
+            deathPanel.SetActive(true);
+            gameObject.GetComponent<Rigidbody2D>().simulated = false;
+            for (int i = 0; i < backGround.Length; i++)
+            {
+                backGround[i].GetComponent<BackgroundHelper>().enabled = false;
+            }
+            gameObject.GetComponent<MoveCharacter>().enabled = false;
+            count.isCount = false;
+            count.death.text = count.count.ToString();
+            isGrounded = false;
+
+            velocity = Vector2.zero;
         }
-        gameObject.GetComponent<MoveCharacter>().enabled = false;
-        count.isCount = false;
-        count.death.text = count.count.ToString();
+        else
+        {
+            deathPanel.SetActive(false);
+            gameObject.GetComponent<Rigidbody2D>().simulated = true;
+            for (int i = 0; i < backGround.Length; i++)
+            {
+                backGround[i].GetComponent<BackgroundHelper>().enabled = true;
+            }
+            gameObject.GetComponent<MoveCharacter>().enabled = true;
+            count.isCount = true;
+        }
+    }
+    public void SaveSQL()
+    {
+        manager.InsertScore(PlayerPrefs.GetString("player_name"), PlayerPrefs.GetInt("score"));
     }
     IEnumerator time()
     {

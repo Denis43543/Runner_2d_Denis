@@ -28,7 +28,7 @@ public class LeaderboardUI : MonoBehaviour
 
             using (IDbCommand dbCommand = dbConnection.CreateCommand())
             {
-                string sql = "SELECT * FROM Leaderboard ORDER BY score DESC LIMIT 5";
+                string sql = "SELECT * FROM Leaderboard ORDER BY score DESC LIMIT 10";
                 dbCommand.CommandText = sql;
 
                 using (IDataReader dataReader = dbCommand.ExecuteReader())
